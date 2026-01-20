@@ -21,14 +21,14 @@ def check_time_dot_time(loops = 200):
     M = loops
     timesfound = np.empty((M,))
     for i in range(M):
-        t1 =  time.time() # get timestamp from timer
-        t2 = time.time() # get timestamp from timer
-        while (t2 - t1) < 1e-16: # if zero then we are below clock granularity, retake timing
-            t2 = time.time() # get timestamp from timer
-        t1 = t2 # this is outside the loop
-        timesfound[i] = t1 # record the time stamp
+        t1 =  time.time()
+        t2 = time.time()
+        while (t2 - t1) < 1e-16:
+            t2 = time.time()
+        t1 = t2
+        timesfound[i] = t1
     minDelta = 1000000
-    Delta = np.diff(timesfound) # it should be cast to int only when needed
+    Delta = np.diff(timesfound)
     minDelta = Delta.min()
     return minDelta
 
