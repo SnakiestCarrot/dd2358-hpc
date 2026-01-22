@@ -1,0 +1,7 @@
+.vscode
+venv
+*.lprof
+*.dat
+*.prof
+*.png
+__pycache__

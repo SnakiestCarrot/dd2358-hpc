@@ -2,6 +2,7 @@
 import timeit
 import time
 from functools import wraps
+from memory_profiler import profile
 
 # area of complex space to investigate
 x1, x2, y1, y2 = -1.8, 1.8, -1.8, 1.8
@@ -24,6 +25,7 @@ def timefn(fn):
         return result
     return measure_time
 
+# @profile
 @timefn
 def calc_pure_python(desired_width, max_iterations):
     """Create a list of complex coordinates (zs) and complex parameters (cs),
@@ -60,6 +62,7 @@ def calc_pure_python(desired_width, max_iterations):
     print(calculate_z_serial_purepython.__name__ + " took", secs, "seconds")
     assert sum(output) == 33219980
 
+# @profile
 @timefn
 def calculate_z_serial_purepython(maxiter, zs, cs):
     """Calculate output list using Julia update rule"""
@@ -75,7 +78,7 @@ def calculate_z_serial_purepython(maxiter, zs, cs):
     return output
 
 if __name__ == "__main__":
-    for _ in range(10):
+    for _ in range(1):
         calc_pure_python(desired_width=1000, max_iterations=300)
     
     print("\nTimings over 10 runs:")
@@ -84,5 +87,5 @@ if __name__ == "__main__":
         print(f"{key}: Average time: {avg_time} seconds over {len(values)} runs")
 
         # I assume we mean the sample standard deviation, not population standard deviation
-        std_dev = (sum((x - avg_time) ** 2 for x in values) / (len(values) - 1)) ** 0.5
-        print(f"{key}: standard deviation: {std_dev} seconds")
+        # std_dev = (sum((x - avg_time) ** 2 for x in values) / (len(values) - 1)) ** 0.5
+        # print(f"{key}: standard deviation: {std_dev} seconds")
