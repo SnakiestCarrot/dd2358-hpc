@@ -5,6 +5,7 @@ import matplotlib.pyplot as plt
 import statistics
 
 class CpuProfiler:
+
     def __init__(self, interval=0.1):
         self.interval = interval
         self.records = []
@@ -44,6 +45,7 @@ class CpuProfiler:
             print("No data recorded")
             return
 
+        print(f"Total records collected: {len(self.records)}")
         times = [r[0] - self.records[0][0] for r in self.records]
         num_cores = len(self.records[0][1])
         core_data = {f"Core {i}": [r[1][i] for r in self.records] for i in range(num_cores)}
@@ -73,7 +75,6 @@ class CpuProfiler:
 
 if __name__ == "__main__":
     profiler = CpuProfiler(interval=0.01)
-    
     with profiler:
-        import ass1
-        ass1.calc_pure_python(desired_width=1000, max_iterations=300)
+        import ass2
+        ass2.run_experiment(1)
