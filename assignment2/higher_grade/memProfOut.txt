@@ -1,0 +1,4 @@
+Grid size: 100x100
+Iterations: 50
+Total time: 0.5999 seconds
+Time per iteration: 11.9975 ms

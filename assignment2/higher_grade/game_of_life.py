@@ -19,7 +19,6 @@ import sys, argparse, time
 import numpy as np
 import matplotlib.pyplot as plt
 import matplotlib.animation as animation
-
 ON = 255
 OFF = 0
 vals = [ON, OFF]
@@ -99,54 +98,46 @@ def addGosperGliderGun(i, j, grid):
 
     grid[i : i + 11, j : j + 38] = gun
 
-
 def update_grid(grid, N):
     """
     Compute the next generation of the Game of Life grid.
 
-    Applies Conway's Game of Life rules to compute the next generation:
+    Applies Conway's Game of Life rules to compute the next generation
+    using vectorized NumPy operations:
 
     - A live cell with fewer than 2 live neighbors dies (underpopulation).
     - A live cell with 2 or 3 live neighbors survives.
     - A live cell with more than 3 live neighbors dies (overpopulation).
     - A dead cell with exactly 3 live neighbors becomes alive (reproduction).
 
-    Uses toroidal boundary conditions (edges wrap around).
+    Uses toroidal boundary conditions via ``np.roll`` (edges wrap around).
 
     :param grid: The current grid state (modified in place).
     :type grid: numpy.ndarray
     :param N: The size of the grid (NxN).
     :type N: int
     """
-    # copy grid since we require 8 neighbors for calculation
-    # and we go line by line
-    newGrid = grid.copy()
-    for i in range(N):
-        for j in range(N):
-            # compute 8-neghbor sum
-            # using toroidal boundary conditions - x and y wrap around
-            # so that the simulaton takes place on a toroidal surface.
-            total = int(
-                (
-                    grid[i, (j - 1) % N]
-                    + grid[i, (j + 1) % N]
-                    + grid[(i - 1) % N, j]
-                    + grid[(i + 1) % N, j]
-                    + grid[(i - 1) % N, (j - 1) % N]
-                    + grid[(i - 1) % N, (j + 1) % N]
-                    + grid[(i + 1) % N, (j - 1) % N]
-                    + grid[(i + 1) % N, (j + 1) % N]
-                )
-                / 255
-            )
-            # apply Conway's rules
-            if grid[i, j] == ON:
-                if (total < 2) or (total > 3):
-                    newGrid[i, j] = OFF
-            else:
-                if total == 3:
-                    newGrid[i, j] = ON
-    grid[:] = newGrid[:]
+    # compute 8-neighbor sum using np.roll for toroidal boundary conditions
+    neighbors = (
+        np.roll(grid, 1, axis=0) +   # up
+        np.roll(grid, -1, axis=0) +   # down
+        np.roll(grid, 1, axis=1) +    # left
+        np.roll(grid, -1, axis=1) +   # right
+        np.roll(np.roll(grid, 1, axis=0), 1, axis=1) +    # up-left
+        np.roll(np.roll(grid, 1, axis=0), -1, axis=1) +   # up-right
+        np.roll(np.roll(grid, -1, axis=0), 1, axis=1) +   # down-left
+        np.roll(np.roll(grid, -1, axis=0), -1, axis=1)    # down-right
+    ) // 255
+
+    # apply Conway's rules vectorized
+    alive = grid == ON
+    # survive: alive and 2 or 3 neighbors
+    survive = alive & ((neighbors == 2) | (neighbors == 3))
+    # birth: dead and exactly 3 neighbors
+    birth = ~alive & (neighbors == 3)
+
+    grid[:] = OFF
+    grid[survive | birth] = ON
 
 
 def update(frameNum, img, grid, N):

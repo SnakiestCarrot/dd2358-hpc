@@ -1,0 +1,62 @@
+Grid size: 100x100
+Iterations: 50
+Total time: 6.3498 seconds
+Time per iteration: 126.9951 ms
+Wrote profile results to 'game_of_life.py.lprof'
+Timer unit: 1e-06 s
+
+Total time: 4.40558 s
+File: game_of_life.py
+Function: update_grid at line 103
+
+Line #      Hits         Time  Per Hit   % Time  Line Contents
+==============================================================
+   103                                           @profile
+   104                                           def update_grid(grid, N):
+   105                                               """
+   106                                               Compute the next generation of the Game of Life grid.
+   107                                           
+   108                                               Applies Conway's Game of Life rules to compute the next generation:
+   109                                           
+   110                                               - A live cell with fewer than 2 live neighbors dies (underpopulation).
+   111                                               - A live cell with 2 or 3 live neighbors survives.
+   112                                               - A live cell with more than 3 live neighbors dies (overpopulation).
+   113                                               - A dead cell with exactly 3 live neighbors becomes alive (reproduction).
+   114                                           
+   115                                               Uses toroidal boundary conditions (edges wrap around).
+   116                                           
+   117                                               :param grid: The current grid state (modified in place).
+   118                                               :type grid: numpy.ndarray
+   119                                               :param N: The size of the grid (NxN).
+   120                                               :type N: int
+   121                                               """
+   122                                               # copy grid since we require 8 neighbors for calculation
+   123                                               # and we go line by line
+   124        50        182.5      3.7      0.0      newGrid = grid.copy()
+   125      5050       1591.0      0.3      0.0      for i in range(N):
+   126    505000     180983.3      0.4      4.1          for j in range(N):
+   127                                                       # compute 8-neghbor sum
+   128                                                       # using toroidal boundary conditions - x and y wrap around
+   129                                                       # so that the simulaton takes place on a toroidal surface.
+   130   1000000     358123.2      0.4      8.1              total = int(
+   131    500000     180527.6      0.4      4.1                  (
+   132   4000000    1611198.3      0.4     36.6                      grid[i, (j - 1) % N]
+   133    500000     212239.8      0.4      4.8                      + grid[i, (j + 1) % N]
+   134    500000     211226.6      0.4      4.8                      + grid[(i - 1) % N, j]
+   135    500000     206044.8      0.4      4.7                      + grid[(i + 1) % N, j]
+   136    500000     218797.8      0.4      5.0                      + grid[(i - 1) % N, (j - 1) % N]
+   137    500000     217533.8      0.4      4.9                      + grid[(i - 1) % N, (j + 1) % N]
+   138    500000     218435.1      0.4      5.0                      + grid[(i + 1) % N, (j - 1) % N]
+   139    500000     213034.0      0.4      4.8                      + grid[(i + 1) % N, (j + 1) % N]
+   140                                                           )
+   141    500000     149708.0      0.3      3.4                  / 255
+   142                                                       )
+   143                                                       # apply Conway's rules
+   144    500000     235250.3      0.5      5.3              if grid[i, j] == ON:
+   145     71031      24191.9      0.3      0.5                  if (total < 2) or (total > 3):
+   146     30599      13579.3      0.4      0.3                      newGrid[i, j] = OFF
+   147                                                       else:
+   148    428969     138766.0      0.3      3.1                  if total == 3:
+   149     29853      13733.4      0.5      0.3                      newGrid[i, j] = ON
+   150        50        431.2      8.6      0.0      grid[:] = newGrid[:]
+
