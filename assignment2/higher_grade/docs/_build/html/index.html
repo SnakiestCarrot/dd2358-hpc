@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="./">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>game_of_life documentation &#8212; game_of_life  documentation</title>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=5ecbeea2" />
+    <link rel="stylesheet" type="text/css" href="_static/basic.css?v=b08954a9" />
+    <link rel="stylesheet" type="text/css" href="_static/alabaster.css?v=27fed22d" />
+    <script src="_static/documentation_options.js?v=5929fcd5"></script>
+    <script src="_static/doctools.js?v=fd6eb6e6"></script>
+    <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+
+  
+  
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <section id="module-game_of_life">
+<span id="game-of-life-documentation"></span><h1>game_of_life documentation<a class="headerlink" href="#module-game_of_life" title="Link to this heading">¶</a></h1>
+<section id="game-of-life-module">
+<h2>Game of Life Module<a class="headerlink" href="#game-of-life-module" title="Link to this heading">¶</a></h2>
+<p>A simple Python/matplotlib implementation of Conway’s Game of Life.</p>
+<p>This module provides functions to simulate Conway’s Game of Life cellular automaton,
+including support for random initial states and classic patterns like gliders
+and the Gosper Glider Gun.</p>
+<p>Example usage:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">python</span> <span class="n">game_of_life</span><span class="o">.</span><span class="n">py</span> <span class="o">--</span><span class="n">grid</span><span class="o">-</span><span class="n">size</span> <span class="mi">100</span> <span class="o">--</span><span class="n">glider</span>
+</pre></div>
+</div>
+<p>Author: Casper Johansson and Filip Boive</p>
+</section>
+<dl class="py function">
+<dt class="sig sig-object py" id="game_of_life.addGlider">
+<span class="sig-prename descclassname"><span class="pre">game_of_life.</span></span><span class="sig-name descname"><span class="pre">addGlider</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">i</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">j</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">grid</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#game_of_life.addGlider" title="Link to this definition">¶</a></dt>
+<dd><p>Add a glider pattern to the grid.</p>
+<p>A glider is a pattern that moves diagonally across the grid over time.
+This function places the glider with its top-left cell at position (i, j).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>i</strong> (<em>int</em>) – Row index for the top-left corner of the glider.</p></li>
+<li><p><strong>j</strong> (<em>int</em>) – Column index for the top-left corner of the glider.</p></li>
+<li><p><strong>grid</strong> (<em>numpy.ndarray</em>) – The grid to add the glider to (modified in place).</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="game_of_life.addGosperGliderGun">
+<span class="sig-prename descclassname"><span class="pre">game_of_life.</span></span><span class="sig-name descname"><span class="pre">addGosperGliderGun</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">i</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">j</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">grid</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#game_of_life.addGosperGliderGun" title="Link to this definition">¶</a></dt>
+<dd><p>Add a Gosper Glider Gun pattern to the grid.</p>
+<p>The Gosper Glider Gun is a pattern that periodically emits gliders.
+It was the first known finite pattern with unbounded growth, discovered
+by Bill Gosper in 1970. The gun occupies an 11x38 cell region.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>i</strong> (<em>int</em>) – Row index for the top-left corner of the gun.</p></li>
+<li><p><strong>j</strong> (<em>int</em>) – Column index for the top-left corner of the gun.</p></li>
+<li><p><strong>grid</strong> (<em>numpy.ndarray</em>) – The grid to add the gun to (modified in place).</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="game_of_life.main">
+<span class="sig-prename descclassname"><span class="pre">game_of_life.</span></span><span class="sig-name descname"><span class="pre">main</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#game_of_life.main" title="Link to this definition">¶</a></dt>
+<dd><p>Main entry point for Conway’s Game of Life simulation.</p>
+<p>Parses command line arguments and initializes the simulation with the
+specified parameters. Supports the following command line options:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">--grid-size</span></code>: Size of the grid (default: 100)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">--mov-file</span></code>: Output movie file path</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">--interval</span></code>: Animation update interval in milliseconds (default: 50)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">--glider</span></code>: Start with a single glider pattern</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">--gosper</span></code>: Start with a Gosper Glider Gun pattern</p></li>
+</ul>
+<p>If neither –glider nor –gosper is specified, the grid is initialized
+with random values.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="game_of_life.randomGrid">
+<span class="sig-prename descclassname"><span class="pre">game_of_life.</span></span><span class="sig-name descname"><span class="pre">randomGrid</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">N</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#game_of_life.randomGrid" title="Link to this definition">¶</a></dt>
+<dd><p>Generate a grid of NxN random values.</p>
+<p>Creates a square grid where each cell is randomly set to ON (255) or OFF (0),
+with a 20% probability of being ON and 80% probability of being OFF.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>N</strong> (<em>int</em>) – The size of the grid (creates an NxN grid).</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A 2D numpy array of shape (N, N) with random ON/OFF values.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>numpy.ndarray</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="game_of_life.update">
+<span class="sig-prename descclassname"><span class="pre">game_of_life.</span></span><span class="sig-name descname"><span class="pre">update</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">frameNum</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">img</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">grid</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">N</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#game_of_life.update" title="Link to this definition">¶</a></dt>
+<dd><p>Update the grid for one generation of the Game of Life.</p>
+<p>Applies Conway’s Game of Life rules to compute the next generation:</p>
+<ul class="simple">
+<li><p>A live cell with fewer than 2 live neighbors dies (underpopulation).</p></li>
+<li><p>A live cell with 2 or 3 live neighbors survives.</p></li>
+<li><p>A live cell with more than 3 live neighbors dies (overpopulation).</p></li>
+<li><p>A dead cell with exactly 3 live neighbors becomes alive (reproduction).</p></li>
+</ul>
+<p>Uses toroidal boundary conditions (edges wrap around).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>frameNum</strong> (<em>int</em>) – The current frame number (used by matplotlib animation).</p></li>
+<li><p><strong>img</strong> (<em>matplotlib.image.AxesImage</em>) – The matplotlib image object to update.</p></li>
+<li><p><strong>grid</strong> (<em>numpy.ndarray</em>) – The current grid state (modified in place).</p></li>
+<li><p><strong>N</strong> (<em>int</em>) – The size of the grid (NxN).</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A tuple containing the updated image object.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>tuple</p>
+</dd>
+</dl>
+</dd></dl>
+
+<div class="toctree-wrapper compound">
+</div>
+</section>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="Main">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="#">game_of_life</a></h1>
+
+
+
+
+
+
+
+
+
+<search id="searchbox" style="display: none" role="search">
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" placeholder="Search"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script><h3>Navigation</h3>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="#">Documentation overview</a><ul>
+  </ul></li>
+</ul>
+</div>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &#169;2026, Casper Johansson and Filip Boive.
+      
+      |
+      Powered by <a href="https://www.sphinx-doc.org/">Sphinx 9.1.0</a>
+      &amp; <a href="https://alabaster.readthedocs.io">Alabaster 1.0.0</a>
+      
+      |
+      <a href="_sources/index.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>
