@@ -5,3 +5,4 @@ venv
 *.prof
 *.png
 __pycache__
+vtk_output
