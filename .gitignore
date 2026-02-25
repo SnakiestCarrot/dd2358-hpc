@@ -6,3 +6,5 @@ venv
 *.png
 __pycache__
 vtk_output
+*.h5
+**/build
