@@ -8,3 +8,4 @@ __pycache__
 vtk_output
 *.h5
 **/build
+vtk_output_ocean
